@@ -1,6 +1,7 @@
-import { Component, computed, input, output, signal } from '@angular/core';
+import { Component, computed, inject, input, output, signal } from '@angular/core';
 
 import { FlightOffer } from '../../../../core/api/skyroute-api.models';
+import { LanguageService } from '../../../../core/i18n/language.service';
 import { FlightOfferCard } from '../flight-offer-card/flight-offer-card';
 
 type FlightSortOption = 'priceAsc' | 'priceDesc' | 'durationAsc' | 'departureAsc';
@@ -12,18 +13,21 @@ type FlightSortOption = 'priceAsc' | 'priceDesc' | 'durationAsc' | 'departureAsc
   styleUrl: './flight-results-list.scss',
 })
 export class FlightResultsList {
+  private readonly language = inject(LanguageService);
+
   readonly offers = input<FlightOffer[]>([]);
   readonly selectedOfferId = input<string | null>(null);
   readonly loading = input(false);
   readonly hasSearched = input(false);
   readonly selected = output<FlightOffer>();
 
-  protected readonly sortOptions: { value: FlightSortOption; label: string }[] = [
-    { value: 'priceAsc', label: 'Precio: menor a mayor' },
-    { value: 'priceDesc', label: 'Precio: mayor a menor' },
-    { value: 'durationAsc', label: 'Duracion: menor primero' },
-    { value: 'departureAsc', label: 'Salida: mas temprano' },
-  ];
+  protected readonly t = this.language.text;
+  protected readonly sortOptions = computed<{ value: FlightSortOption; label: string }[]>(() => [
+    { value: 'priceAsc', label: this.t().sortPriceAsc },
+    { value: 'priceDesc', label: this.t().sortPriceDesc },
+    { value: 'durationAsc', label: this.t().sortDurationAsc },
+    { value: 'departureAsc', label: this.t().sortDepartureAsc },
+  ]);
   protected readonly selectedSort = signal<FlightSortOption>('priceAsc');
   protected readonly sortedOffers = computed(() => {
     const offers = [...this.offers()];

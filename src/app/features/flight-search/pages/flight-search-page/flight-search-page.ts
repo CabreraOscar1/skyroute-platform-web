@@ -10,6 +10,8 @@ import {
   PassengerRequest,
 } from '../../../../core/api/skyroute-api.models';
 import { SkyrouteApiService } from '../../../../core/api/skyroute-api.service';
+import { LanguageService } from '../../../../core/i18n/language.service';
+import { Language } from '../../../../core/i18n/translations';
 import { BookingPanel } from '../../../booking/components/booking-panel/booking-panel';
 import { FlightResultsList } from '../../components/flight-results-list/flight-results-list';
 import { FlightSearchForm } from '../../components/flight-search-form/flight-search-form';
@@ -22,6 +24,8 @@ import { FlightSearchForm } from '../../components/flight-search-form/flight-sea
 })
 export class FlightSearchPage implements OnInit {
   private readonly api = inject(SkyrouteApiService);
+  protected readonly language = inject(LanguageService);
+  protected readonly t = this.language.text;
 
   protected readonly airports = signal<Airport[]>([]);
   protected readonly offers = signal<FlightOffer[]>([]);
@@ -57,7 +61,7 @@ export class FlightSearchPage implements OnInit {
           this.offers.set(response.results);
           this.selectedOffer.set(response.results[0] ?? null);
         },
-        error: (error) => this.setError(error, 'No pudimos buscar vuelos.'),
+        error: (error) => this.setError(error, this.t().unableSearch),
       });
   }
 
@@ -70,7 +74,7 @@ export class FlightSearchPage implements OnInit {
     const offer = this.selectedOffer();
 
     if (!offer) {
-      this.error.set('Selecciona una oferta antes de reservar.');
+      this.error.set(this.t().selectBeforeBooking);
       return;
     }
 
@@ -85,8 +89,12 @@ export class FlightSearchPage implements OnInit {
       .pipe(finalize(() => this.bookingInProgress.set(false)))
       .subscribe({
         next: (booking) => this.booking.set(booking),
-        error: (error) => this.setError(error, 'No pudimos confirmar la reserva.'),
+        error: (error) => this.setError(error, this.t().unableBooking),
       });
+  }
+
+  protected setLanguage(language: Language): void {
+    this.language.setLanguage(language);
   }
 
   private loadAirports(): void {
@@ -97,7 +105,7 @@ export class FlightSearchPage implements OnInit {
       .pipe(finalize(() => this.loadingAirports.set(false)))
       .subscribe({
         next: (airports) => this.airports.set(airports),
-        error: (error) => this.setError(error, 'No pudimos cargar los aeropuertos.'),
+        error: (error) => this.setError(error, this.t().unableAirports),
       });
   }
 
@@ -108,7 +116,7 @@ export class FlightSearchPage implements OnInit {
           ? error.error
           : (error.error as { message?: string } | null)?.message;
 
-      this.error.set(backendMessage ?? `${fallbackMessage} Codigo ${error.status}.`);
+      this.error.set(backendMessage ?? `${fallbackMessage} ${this.t().code} ${error.status}.`);
       return;
     }
 

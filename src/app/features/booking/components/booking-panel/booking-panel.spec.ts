@@ -26,6 +26,8 @@ describe('BookingPanel', () => {
   };
 
   beforeEach(async () => {
+    localStorage.clear();
+
     await TestBed.configureTestingModule({
       imports: [BookingPanel],
     }).compileComponents();
@@ -38,7 +40,7 @@ describe('BookingPanel', () => {
     fixture.detectChanges();
 
     expect(documentLabel()).toContain('Passport Number');
-    expect(fixture.nativeElement.textContent).toContain('Letras y numeros');
+    expect(fixture.nativeElement.textContent).toContain('Letters and numbers');
   });
 
   it('should use national id validation for domestic flights', () => {
@@ -49,7 +51,7 @@ describe('BookingPanel', () => {
     fixture.detectChanges();
 
     expect(documentLabel()).toContain('National ID');
-    expect(fixture.nativeElement.textContent).toContain('Solo numeros');
+    expect(fixture.nativeElement.textContent).toContain('Numbers only');
   });
 
   it('should not confirm a domestic booking with an alphanumeric national id', () => {
@@ -70,7 +72,7 @@ describe('BookingPanel', () => {
     fixture.detectChanges();
 
     expect(emittedPassengers).toHaveLength(0);
-    expect(fixture.nativeElement.textContent).toContain('National ID invalido.');
+    expect(fixture.nativeElement.textContent).toContain('National ID is invalid.');
   });
 
   function documentLabel(): string {

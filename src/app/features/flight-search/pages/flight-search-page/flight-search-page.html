@@ -2,12 +2,27 @@
   <header class="page-header">
     <div>
       <p class="eyebrow">SkyRoute</p>
-      <h1>Buscar vuelos</h1>
+      <h1>{{ t().appTitle }}</h1>
+      <p class="subtitle">{{ t().appSubtitle }}</p>
     </div>
 
-    <div class="api-status" aria-live="polite">
-      <span [class.busy]="isBusy()"></span>
-      {{ isBusy() ? 'Procesando' : 'Listo' }}
+    <div class="header-actions">
+      <div class="language-switch" aria-label="Language selector">
+        @for (option of language.options; track option.code) {
+          <button
+            type="button"
+            [class.active]="language.language() === option.code"
+            (click)="setLanguage(option.code)"
+          >
+            {{ option.label }}
+          </button>
+        }
+      </div>
+
+      <div class="api-status" aria-live="polite">
+        <span [class.busy]="isBusy()"></span>
+        {{ isBusy() ? t().processing : t().ready }}
+      </div>
     </div>
   </header>
 

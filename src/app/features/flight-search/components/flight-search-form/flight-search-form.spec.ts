@@ -7,11 +7,18 @@ describe('FlightSearchForm', () => {
   let fixture: ComponentFixture<FlightSearchForm>;
 
   const airports: Airport[] = [
-    { code: 'EZE', name: 'Ministro Pistarini International Airport', city: 'Buenos Aires', countryCode: 'AR' },
+    {
+      code: 'EZE',
+      name: 'Ministro Pistarini International Airport',
+      city: 'Buenos Aires',
+      countryCode: 'AR',
+    },
     { code: 'MIA', name: 'Miami International Airport', city: 'Miami', countryCode: 'US' },
   ];
 
   beforeEach(async () => {
+    localStorage.clear();
+
     await TestBed.configureTestingModule({
       imports: [FlightSearchForm],
     }).compileComponents();
@@ -34,6 +41,8 @@ describe('FlightSearchForm', () => {
     fixture.detectChanges();
 
     expect(emittedRequests).toHaveLength(0);
-    expect(fixture.nativeElement.textContent).toContain('Origen y destino deben ser distintos.');
+    expect(fixture.nativeElement.textContent).toContain(
+      'Origin and destination must be different.',
+    );
   });
 });

@@ -7,6 +7,7 @@ import {
   FlightOffer,
   PassengerRequest,
 } from '../../../../core/api/skyroute-api.models';
+import { LanguageService } from '../../../../core/i18n/language.service';
 
 @Component({
   selector: 'app-booking-panel',
@@ -16,6 +17,7 @@ import {
 })
 export class BookingPanel {
   private readonly fb = inject(NonNullableFormBuilder);
+  protected readonly t = inject(LanguageService).text;
 
   readonly selectedOffer = input<FlightOffer | null>(null);
   readonly booking = input<BookingResponse | null>(null);
@@ -27,25 +29,26 @@ export class BookingPanel {
     email: ['ana.perez@example.com', [Validators.required, Validators.email]],
     documentNumber: ['A1234567', [Validators.required]],
   });
-  protected readonly documentType = computed<'National ID' | 'Passport Number'>(() => {
+  protected readonly documentKind = computed<'nationalId' | 'passport'>(() => {
     const offer = this.selectedOffer();
 
     return offer && offer.origin.countryCode === offer.destination.countryCode
-      ? 'National ID'
-      : 'Passport Number';
+      ? 'nationalId'
+      : 'passport';
   });
+  protected readonly documentLabel = computed(() =>
+    this.documentKind() === 'nationalId' ? this.t().nationalId : this.t().passportNumber,
+  );
   protected readonly documentHint = computed(() =>
-    this.documentType() === 'National ID'
-      ? 'Solo numeros, entre 6 y 12 digitos.'
-      : 'Letras y numeros, entre 6 y 12 caracteres.',
+    this.documentKind() === 'nationalId' ? this.t().nationalIdHint : this.t().passportHint,
   );
   protected readonly documentPlaceholder = computed(() =>
-    this.documentType() === 'National ID' ? '12345678' : 'A1234567',
+    this.documentKind() === 'nationalId' ? '12345678' : 'A1234567',
   );
 
   private readonly documentValidatorSync = effect(() => {
     const documentPattern =
-      this.documentType() === 'National ID' ? /^\d{6,12}$/ : /^[a-zA-Z0-9]{6,12}$/;
+      this.documentKind() === 'nationalId' ? /^\d{6,12}$/ : /^[a-zA-Z0-9]{6,12}$/;
     const control = this.form.controls.documentNumber;
 
     control.setValidators([Validators.required, Validators.pattern(documentPattern)]);
