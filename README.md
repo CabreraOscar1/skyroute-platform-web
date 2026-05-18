@@ -81,6 +81,7 @@ npm test -- --watch=false
 - Frontend document validation based on the selected route.
 - Booking confirmation through `POST /api/bookings`.
 - Booking reference display.
+- Runtime language switch between English and Spanish.
 
 ## Frontend Architecture
 
@@ -89,6 +90,7 @@ src/app/
   core/
     api/
     config/
+    i18n/
   features/
     flight-search/
       pages/
@@ -108,9 +110,12 @@ src/app/
 
 Angular Signals are used for local state because the current flow is linear and does not require a global store. Reactive Forms are used for clear, testable validation.
 
+The language switch is intentionally lightweight: a typed translation dictionary plus a small `LanguageService` with Signals and `localStorage`. Angular i18n or external translation libraries were avoided to keep runtime language switching simple for this challenge scope.
+
 ## Trade-offs
 
 - NgRx was not added because the current state is local and simple.
 - Angular environments were not added yet; the API base URL is centralized in `api.config.ts`.
 - End-to-end tests are not configured yet; build, base unit tests, and manual integration testing were prioritized.
 - Booking is implemented as a panel inside the main flow to keep the challenge focused.
+- Backend validation messages are returned as-is; only frontend-owned UI text is translated.

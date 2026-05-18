@@ -25,6 +25,8 @@ describe('FlightResultsList', () => {
   ];
 
   beforeEach(async () => {
+    localStorage.clear();
+
     await TestBed.configureTestingModule({
       imports: [FlightResultsList],
     }).compileComponents();

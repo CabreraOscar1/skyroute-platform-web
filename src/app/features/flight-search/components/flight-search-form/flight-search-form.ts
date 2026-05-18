@@ -6,6 +6,7 @@ import {
   CabinClass,
   FlightSearchRequest,
 } from '../../../../core/api/skyroute-api.models';
+import { LanguageService } from '../../../../core/i18n/language.service';
 
 @Component({
   selector: 'app-flight-search-form',
@@ -16,6 +17,7 @@ import {
 export class FlightSearchForm {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly defaultDepartureDate = this.formatDate(this.addDays(new Date(), 21));
+  protected readonly t = inject(LanguageService).text;
 
   readonly airports = input<Airport[]>([]);
   readonly loading = input(false);

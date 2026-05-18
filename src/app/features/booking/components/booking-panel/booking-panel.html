@@ -1,7 +1,7 @@
 <aside class="booking-panel">
   <header>
-    <p>Reserva</p>
-    <h2>{{ booking()?.status ?? 'Pendiente' }}</h2>
+    <p>{{ t().booking }}</p>
+    <h2>{{ booking()?.status ?? t().pending }}</h2>
   </header>
 
   @if (selectedOffer(); as offer) {
@@ -16,47 +16,47 @@
 
       <dl class="flight-details">
         <div>
-          <dt>Ruta</dt>
-          <dd>{{ offer.origin.code }} a {{ offer.destination.code }}</dd>
+          <dt>{{ t().route }}</dt>
+          <dd>{{ offer.origin.code }} {{ t().to }} {{ offer.destination.code }}</dd>
         </div>
         <div>
-          <dt>Salida</dt>
+          <dt>{{ t().departure }}</dt>
           <dd>{{ offer.departureAt | date: 'HH:mm' }}</dd>
         </div>
         <div>
-          <dt>Llegada</dt>
+          <dt>{{ t().arrival }}</dt>
           <dd>{{ offer.arrivalAt | date: 'HH:mm' }}</dd>
         </div>
         <div>
-          <dt>Duracion</dt>
+          <dt>{{ t().duration }}</dt>
           <dd>{{ formatDuration(offer.durationMinutes) }}</dd>
         </div>
       </dl>
 
       <dl class="price-breakdown">
         <div>
-          <dt>Por pasajero</dt>
+          <dt>{{ t().perPassenger }}</dt>
           <dd>{{ offer.pricePerPassenger | currency: offer.currency }}</dd>
         </div>
         <div>
-          <dt>Pasajeros</dt>
+          <dt>{{ t().passengers }}</dt>
           <dd>{{ offer.passengerCount }}</dd>
         </div>
         <div>
-          <dt>Total</dt>
+          <dt>{{ t().total }}</dt>
           <dd>{{ offer.totalPrice | currency: offer.currency }}</dd>
         </div>
       </dl>
     </div>
 
     <form [formGroup]="form" (ngSubmit)="confirm()">
-      <label for="fullName">Pasajero principal</label>
+      <label for="fullName">{{ t().primaryPassenger }}</label>
       <input id="fullName" type="text" formControlName="fullName" />
 
-      <label for="email">Email</label>
+      <label for="email">{{ t().email }}</label>
       <input id="email" type="email" formControlName="email" />
 
-      <label for="documentNumber">{{ documentType() }}</label>
+      <label for="documentNumber">{{ documentLabel() }}</label>
       <input
         id="documentNumber"
         type="text"
@@ -65,20 +65,20 @@
       />
       <small>{{ documentHint() }}</small>
       @if (form.controls.documentNumber.invalid && form.controls.documentNumber.touched) {
-        <small class="field-error">{{ documentType() }} invalido.</small>
+        <small class="field-error">{{ documentLabel() }} {{ t().invalidDocument }}</small>
       }
 
       <button type="submit" [disabled]="loading()">
-        {{ loading() ? 'Confirmando...' : 'Confirmar reserva' }}
+        {{ loading() ? t().confirming : t().confirmBooking }}
       </button>
     </form>
   } @else {
-    <p class="empty">Selecciona una oferta para continuar.</p>
+    <p class="empty">{{ t().selectOffer }}</p>
   }
 
   @if (booking(); as confirmedBooking) {
     <div class="confirmation">
-      <span>Codigo de reserva</span>
+      <span>{{ t().bookingReference }}</span>
       <strong>{{ confirmedBooking.bookingReference }}</strong>
       <small>
         {{ confirmedBooking.provider }} {{ confirmedBooking.flightNumber }} -

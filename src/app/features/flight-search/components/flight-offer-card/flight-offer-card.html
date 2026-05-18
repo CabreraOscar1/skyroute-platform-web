@@ -11,7 +11,7 @@
   </span>
 
   <span class="route">
-    <strong>{{ offer().origin.code }} a {{ offer().destination.code }}</strong>
+    <strong>{{ offer().origin.code }} {{ t().to }} {{ offer().destination.code }}</strong>
     <small>
       {{ offer().departureAt | date: 'HH:mm' }} - {{ offer().arrivalAt | date: 'HH:mm' }}
       | {{ formatDuration(offer().durationMinutes) }}
@@ -20,6 +20,6 @@
 
   <span class="price">
     <strong>{{ offer().totalPrice | currency: offer().currency }}</strong>
-    <small>{{ offer().pricePerPassenger | currency: offer().currency }} por pasajero</small>
+    <small>{{ offer().pricePerPassenger | currency: offer().currency }} {{ t().perPassenger }}</small>
   </span>
 </button>

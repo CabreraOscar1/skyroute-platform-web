@@ -31,6 +31,44 @@ h1 {
   line-height: 1.1;
 }
 
+.subtitle {
+  max-width: 520px;
+  margin: 8px 0 0;
+  color: #667085;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.language-switch {
+  display: inline-flex;
+  border: 1px solid #d7e0ea;
+  border-radius: 999px;
+  background: #ffffff;
+  padding: 3px;
+}
+
+.language-switch button {
+  min-width: 38px;
+  min-height: 30px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #475467;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.language-switch .active {
+  background: #2f6f7f;
+  color: #ffffff;
+}
+
 .api-status {
   display: inline-flex;
   align-items: center;
@@ -82,6 +120,11 @@ h1 {
   .page-header {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .header-actions {
+    justify-content: space-between;
+    width: 100%;
   }
 
   .workspace {

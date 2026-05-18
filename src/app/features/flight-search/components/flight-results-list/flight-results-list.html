@@ -1,15 +1,18 @@
 <section class="results-panel">
   <header>
     <div>
-      <p>Resultados</p>
-      <h2>{{ offers().length }} ofertas</h2>
+      <p>{{ t().results }}</p>
+      <h2>
+        {{ offers().length }}
+        {{ offers().length === 1 ? t().offerSingular : t().offerPlural }}
+      </h2>
     </div>
 
     @if (offers().length > 1) {
       <label>
-        Ordenar
+        {{ t().sort }}
         <select [value]="selectedSort()" (change)="changeSort($event)">
-          @for (option of sortOptions; track option.value) {
+          @for (option of sortOptions(); track option.value) {
             <option [value]="option.value">{{ option.label }}</option>
           }
         </select>
@@ -18,7 +21,7 @@
   </header>
 
   @if (loading()) {
-    <p class="empty">Buscando ofertas disponibles...</p>
+    <p class="empty">{{ t().searchingOffers }}</p>
   } @else if (offers().length > 0) {
     <div class="results">
       @for (offer of sortedOffers(); track offer.offerId) {
@@ -30,8 +33,8 @@
       }
     </div>
   } @else if (hasSearched()) {
-    <p class="empty">No hay ofertas para esta busqueda.</p>
+    <p class="empty">{{ t().noOffers }}</p>
   } @else {
-    <p class="empty">Completa la busqueda para ver ofertas.</p>
+    <p class="empty">{{ t().completeSearch }}</p>
   }
 </section>
