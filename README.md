@@ -114,8 +114,3 @@ Angular Signals are used for local state because the current flow is linear and 
 - Angular environments were not added yet; the API base URL is centralized in `api.config.ts`.
 - End-to-end tests are not configured yet; build, base unit tests, and manual integration testing were prioritized.
 - Booking is implemented as a panel inside the main flow to keep the challenge focused.
-
-## Documentation
-
-- `docs/decisiones-frontend-entrevista.md`
-- `docs/Decisiones_Frontend_Entrevista.docx`
