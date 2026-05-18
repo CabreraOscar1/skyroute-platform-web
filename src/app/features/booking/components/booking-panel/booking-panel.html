@@ -1,0 +1,89 @@
+<aside class="booking-panel">
+  <header>
+    <p>Reserva</p>
+    <h2>{{ booking()?.status ?? 'Pendiente' }}</h2>
+  </header>
+
+  @if (selectedOffer(); as offer) {
+    <div class="summary">
+      <div class="summary-main">
+        <span>
+          <strong>{{ offer.provider }}</strong>
+          <small>{{ offer.flightNumber }} - {{ offer.cabinClass }}</small>
+        </span>
+        <strong>{{ offer.totalPrice | currency: offer.currency }}</strong>
+      </div>
+
+      <dl class="flight-details">
+        <div>
+          <dt>Ruta</dt>
+          <dd>{{ offer.origin.code }} a {{ offer.destination.code }}</dd>
+        </div>
+        <div>
+          <dt>Salida</dt>
+          <dd>{{ offer.departureAt | date: 'HH:mm' }}</dd>
+        </div>
+        <div>
+          <dt>Llegada</dt>
+          <dd>{{ offer.arrivalAt | date: 'HH:mm' }}</dd>
+        </div>
+        <div>
+          <dt>Duracion</dt>
+          <dd>{{ formatDuration(offer.durationMinutes) }}</dd>
+        </div>
+      </dl>
+
+      <dl class="price-breakdown">
+        <div>
+          <dt>Por pasajero</dt>
+          <dd>{{ offer.pricePerPassenger | currency: offer.currency }}</dd>
+        </div>
+        <div>
+          <dt>Pasajeros</dt>
+          <dd>{{ offer.passengerCount }}</dd>
+        </div>
+        <div>
+          <dt>Total</dt>
+          <dd>{{ offer.totalPrice | currency: offer.currency }}</dd>
+        </div>
+      </dl>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="confirm()">
+      <label for="fullName">Pasajero principal</label>
+      <input id="fullName" type="text" formControlName="fullName" />
+
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" />
+
+      <label for="documentNumber">{{ documentType() }}</label>
+      <input
+        id="documentNumber"
+        type="text"
+        formControlName="documentNumber"
+        [placeholder]="documentPlaceholder()"
+      />
+      <small>{{ documentHint() }}</small>
+      @if (form.controls.documentNumber.invalid && form.controls.documentNumber.touched) {
+        <small class="field-error">{{ documentType() }} invalido.</small>
+      }
+
+      <button type="submit" [disabled]="loading()">
+        {{ loading() ? 'Confirmando...' : 'Confirmar reserva' }}
+      </button>
+    </form>
+  } @else {
+    <p class="empty">Selecciona una oferta para continuar.</p>
+  }
+
+  @if (booking(); as confirmedBooking) {
+    <div class="confirmation">
+      <span>Codigo de reserva</span>
+      <strong>{{ confirmedBooking.bookingReference }}</strong>
+      <small>
+        {{ confirmedBooking.provider }} {{ confirmedBooking.flightNumber }} -
+        {{ confirmedBooking.totalPrice | currency: confirmedBooking.currency }}
+      </small>
+    </div>
+  }
+</aside>

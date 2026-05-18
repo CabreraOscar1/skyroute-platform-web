@@ -1,0 +1,40 @@
+<main class="page-shell">
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">SkyRoute</p>
+      <h1>Buscar vuelos</h1>
+    </div>
+
+    <div class="api-status" aria-live="polite">
+      <span [class.busy]="isBusy()"></span>
+      {{ isBusy() ? 'Procesando' : 'Listo' }}
+    </div>
+  </header>
+
+  @if (error()) {
+    <p class="status error" role="alert">{{ error() }}</p>
+  }
+
+  <app-flight-search-form
+    [airports]="airports()"
+    [loading]="loadingAirports() || searching()"
+    (search)="searchFlights($event)"
+  />
+
+  <section class="workspace">
+    <app-flight-results-list
+      [offers]="offers()"
+      [selectedOfferId]="selectedOffer()?.offerId ?? null"
+      [loading]="searching()"
+      [hasSearched]="hasSearched()"
+      (selected)="selectOffer($event)"
+    />
+
+    <app-booking-panel
+      [selectedOffer]="selectedOffer()"
+      [booking]="booking()"
+      [loading]="bookingInProgress()"
+      (confirmed)="confirmBooking($event)"
+    />
+  </section>
+</main>

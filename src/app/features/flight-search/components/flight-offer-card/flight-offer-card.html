@@ -1,0 +1,25 @@
+<button
+  type="button"
+  class="offer-card"
+  [class.selected]="selected()"
+  [attr.aria-pressed]="selected()"
+  (click)="chooseOffer()"
+>
+  <span class="provider">
+    <strong>{{ offer().provider }}</strong>
+    <small>{{ offer().flightNumber }} - {{ offer().cabinClass }}</small>
+  </span>
+
+  <span class="route">
+    <strong>{{ offer().origin.code }} a {{ offer().destination.code }}</strong>
+    <small>
+      {{ offer().departureAt | date: 'HH:mm' }} - {{ offer().arrivalAt | date: 'HH:mm' }}
+      | {{ formatDuration(offer().durationMinutes) }}
+    </small>
+  </span>
+
+  <span class="price">
+    <strong>{{ offer().totalPrice | currency: offer().currency }}</strong>
+    <small>{{ offer().pricePerPassenger | currency: offer().currency }} por pasajero</small>
+  </span>
+</button>

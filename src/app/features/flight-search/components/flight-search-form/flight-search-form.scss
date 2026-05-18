@@ -1,0 +1,85 @@
+.search-form {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) auto;
+  gap: 12px;
+  align-items: end;
+  border: 1px solid #d7e0ea;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.compact {
+  min-width: 110px;
+}
+
+label {
+  color: #475467;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+select,
+input {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid #c9d3df;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #172033;
+  font: inherit;
+  padding: 0 10px;
+}
+
+select:focus,
+input:focus {
+  border-color: #2f6f7f;
+  outline: 3px solid rgba(47, 111, 127, 0.14);
+}
+
+small {
+  color: #b42318;
+}
+
+button {
+  min-width: 112px;
+  min-height: 42px;
+  border: 0;
+  border-radius: 6px;
+  background: #2f6f7f;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 750;
+  padding: 0 18px;
+}
+
+button:hover:not(:disabled) {
+  background: #245c69;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+@media (max-width: 1060px) {
+  .search-form {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .search-form {
+    grid-template-columns: 1fr;
+  }
+
+  button {
+    width: 100%;
+  }
+}

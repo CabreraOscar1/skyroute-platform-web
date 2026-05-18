@@ -1,0 +1,170 @@
+.booking-panel {
+  border: 1px solid #d7e0ea;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 16px;
+}
+
+header {
+  margin-bottom: 14px;
+}
+
+p,
+h2 {
+  margin: 0;
+}
+
+header p {
+  color: #667085;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+h2 {
+  margin-top: 2px;
+  font-size: 1.1rem;
+}
+
+.summary,
+.confirmation {
+  display: grid;
+  gap: 12px;
+  border: 1px solid #e4eaf1;
+  border-radius: 6px;
+  background: #f8fafc;
+  padding: 12px;
+}
+
+.summary {
+  margin-bottom: 14px;
+}
+
+.summary-main {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.summary-main span,
+.confirmation {
+  display: grid;
+}
+
+small,
+.empty,
+.confirmation span {
+  color: #667085;
+}
+
+.flight-details,
+.price-breakdown {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.flight-details {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.price-breakdown {
+  border-top: 1px solid #e4eaf1;
+  padding-top: 12px;
+}
+
+.flight-details div,
+.price-breakdown div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+dt {
+  color: #667085;
+}
+
+dd {
+  margin: 0;
+  color: #172033;
+  font-weight: 700;
+  text-align: right;
+}
+
+form {
+  display: grid;
+  gap: 8px;
+}
+
+label {
+  color: #475467;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+input {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid #c9d3df;
+  border-radius: 6px;
+  color: #172033;
+  font: inherit;
+  padding: 0 10px;
+}
+
+input:focus {
+  border-color: #2f6f7f;
+  outline: 3px solid rgba(47, 111, 127, 0.14);
+}
+
+.field-error {
+  color: #b42318;
+}
+
+button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 6px;
+  background: #2f6f7f;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 750;
+  margin-top: 6px;
+}
+
+button:hover:not(:disabled) {
+  background: #245c69;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.empty {
+  border: 1px dashed #c9d3df;
+  border-radius: 6px;
+  padding: 22px;
+  text-align: center;
+}
+
+.confirmation {
+  margin-top: 14px;
+}
+
+@media (max-width: 520px) {
+  .summary-main,
+  .flight-details {
+    grid-template-columns: 1fr;
+  }
+
+  .flight-details div,
+  .price-breakdown div {
+    display: grid;
+  }
+
+  dd {
+    text-align: left;
+  }
+}
