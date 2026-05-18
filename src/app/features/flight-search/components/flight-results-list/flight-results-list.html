@@ -1,0 +1,37 @@
+<section class="results-panel">
+  <header>
+    <div>
+      <p>Resultados</p>
+      <h2>{{ offers().length }} ofertas</h2>
+    </div>
+
+    @if (offers().length > 1) {
+      <label>
+        Ordenar
+        <select [value]="selectedSort()" (change)="changeSort($event)">
+          @for (option of sortOptions; track option.value) {
+            <option [value]="option.value">{{ option.label }}</option>
+          }
+        </select>
+      </label>
+    }
+  </header>
+
+  @if (loading()) {
+    <p class="empty">Buscando ofertas disponibles...</p>
+  } @else if (offers().length > 0) {
+    <div class="results">
+      @for (offer of sortedOffers(); track offer.offerId) {
+        <app-flight-offer-card
+          [offer]="offer"
+          [selected]="selectedOfferId() === offer.offerId"
+          (selectedChange)="selected.emit($event)"
+        />
+      }
+    </div>
+  } @else if (hasSearched()) {
+    <p class="empty">No hay ofertas para esta busqueda.</p>
+  } @else {
+    <p class="empty">Completa la busqueda para ver ofertas.</p>
+  }
+</section>

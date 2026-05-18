@@ -1,0 +1,45 @@
+<form class="search-form" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="field">
+    <label for="origin">Origen</label>
+    <select id="origin" formControlName="origin">
+      @for (airport of airports(); track airport.code) {
+        <option [value]="airport.code">{{ airport.code }} - {{ airport.city }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="destination">Destino</label>
+    <select id="destination" formControlName="destination">
+      @for (airport of airports(); track airport.code) {
+        <option [value]="airport.code">{{ airport.code }} - {{ airport.city }}</option>
+      }
+    </select>
+    @if (form.controls.destination.hasError('sameAirport')) {
+      <small>Origen y destino deben ser distintos.</small>
+    }
+  </div>
+
+  <div class="field">
+    <label for="departureDate">Fecha</label>
+    <input id="departureDate" type="date" formControlName="departureDate" [min]="minDepartureDate" />
+  </div>
+
+  <div class="field compact">
+    <label for="passengerCount">Pasajeros</label>
+    <input id="passengerCount" type="number" min="1" max="9" formControlName="passengerCount" />
+  </div>
+
+  <div class="field">
+    <label for="cabinClass">Cabina</label>
+    <select id="cabinClass" formControlName="cabinClass">
+      @for (cabinClass of cabinClasses; track cabinClass) {
+        <option [value]="cabinClass">{{ cabinClass }}</option>
+      }
+    </select>
+  </div>
+
+  <button type="submit" [disabled]="loading() || airports().length === 0">
+    {{ loading() ? 'Buscando...' : 'Buscar' }}
+  </button>
+</form>
