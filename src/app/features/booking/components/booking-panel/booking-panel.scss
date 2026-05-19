@@ -1,8 +1,15 @@
+.booking-panel,
+.booking-panel * {
+  box-sizing: border-box;
+}
+
 .booking-panel {
+  position: sticky;
+  top: 18px;
   border: 1px solid #d7e0ea;
   border-radius: 8px;
   background: #ffffff;
-  padding: 16px;
+  padding: 18px;
 }
 
 header {
@@ -28,7 +35,7 @@ h2 {
 .summary,
 .confirmation {
   display: grid;
-  gap: 12px;
+  gap: 14px;
   border: 1px solid #e4eaf1;
   border-radius: 6px;
   background: #f8fafc;
@@ -60,12 +67,12 @@ small,
 .flight-details,
 .price-breakdown {
   display: grid;
-  gap: 8px;
+  gap: 10px;
   margin: 0;
 }
 
 .flight-details {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
 }
 
 .price-breakdown {
@@ -93,7 +100,7 @@ dd {
 
 form {
   display: grid;
-  gap: 8px;
+  gap: 9px;
 }
 
 label {
@@ -109,7 +116,7 @@ input {
   border-radius: 6px;
   color: #172033;
   font: inherit;
-  padding: 0 10px;
+  padding: 0 12px;
 }
 
 input:focus {
@@ -122,6 +129,7 @@ input:focus {
 }
 
 button {
+  width: 100%;
   min-height: 42px;
   border: 0;
   border-radius: 6px;
@@ -154,8 +162,7 @@ button:disabled {
 }
 
 @media (max-width: 520px) {
-  .summary-main,
-  .flight-details {
+  .summary-main {
     grid-template-columns: 1fr;
   }
 
